@@ -33,8 +33,17 @@ def pad_sents(sents, pad_token):
     sents_padded = []
 
     ### YOUR CODE HERE (~6 Lines)
-
-
+    
+    # list[list[str]] 인 경우
+    if type(sents[0]) == list:
+        # longest sentence의 길이를 뽑음
+        max_sent_len = max([len(s) for s in sents])
+        # 짧은 sentence 뒤에 longest sentence의 길이만큼 pad_token을 붙임
+        sents_padded = [s + [pad_token] * (max_sent_len - len(s)) for s in sents]
+    
+    # list[str] 인 경우 그대로
+    else:
+        sents_padded = sents
 
     ### END YOUR CODE
 
@@ -79,4 +88,3 @@ def batch_iter(data, batch_size, shuffle=False):
         tgt_sents = [e[1] for e in examples]
 
         yield src_sents, tgt_sents
-
